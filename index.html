@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西游心路：悟空十相成佛记</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0805;
+            color: #e0d6b0;
+            font-family: 'Noto Serif SC', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* 标题样式 */
+        .header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(10, 8, 5, 0.8), rgba(10, 8, 5, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20C40,0,60,0,80,20C100,40,100,60,80,80C60,100,40,100,20,80C0,60,0,40,20,20Z" fill="none" stroke="%23b88b4a" stroke-opacity="0.1" stroke-width="1"/></svg>');
+            background-size: 200px;
+        }
+
+        /* 创意参考样式 */
+        .creative-reference {
+            margin: 10px 0 15px;
+        }
+
+        .reference-link {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 161, 214, 0.15); /* B站蓝色 */
+            color: #00a7e0;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 161, 214, 0.3);
+        }
+
+        .reference-link:hover {
+            background: rgba(0, 161, 214, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .reference-link i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .title {
+            font-size: 5rem;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #e8c35d;
+            text-shadow: 0 0 20px rgba(232, 195, 93, 0.5);
+            margin-bottom: 1.5rem;
+            letter-spacing: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            max-width: 1200px;
+            margin-bottom: 3rem;
+            color: #c9b17e;
+            font-weight: 400;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #b88b4a;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        /* 场景样式 */
+        .scene-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+        
+        /* 交错布局 */
+        .scene-section:nth-child(odd) .video-container {
+            order: 1;
+        }
+        
+        .scene-section:nth-child(odd) .content-container {
+            order: 2;
+            padding-left: 8%;
+            padding-right: 5%;
+        }
+        
+        .scene-section:nth-child(even) .video-container {
+            order: 2;
+        }
+        
+        .scene-section:nth-child(even) .content-container {
+            order: 1;
+            padding-right: 8%;
+            padding-left: 5%;
+        }
+        
+        .video-container {
+            flex: 1;
+            min-height: 70vh;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 0 40px rgba(184, 139, 74, 0.2);
+        }
+        
+        .content-container {
+            flex: 0 0 40%;
+            z-index: 2;
+            padding: 0 5%;
+        }
+        
+        .scene-video {
+            width: 100%;
+            height: 100%;
+            min-height: 70vh;
+            object-fit: cover;
+            filter: saturate(1.1) contrast(1.05) brightness(0.95);
+            transition: all 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .scene-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px rgba(188, 158, 68, 0.5);
+            position: relative;
+            display: inline-block;
+            color: #e8c35d;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .scene-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #b88b4a, transparent);
+        }
+        
+        .scene-description {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            color: #d4c8a9;
+        }
+        
+        .scene-highlight {
+            background-color: rgba(184, 139, 74, 0.15);
+            border-left: 3px solid #b88b4a;
+            padding: 1.5rem;
+            font-style: italic;
+            margin: 1.8rem 0;
+            border-radius: 0 8px 8px 0;
+            color: #e0d6b0;
+            position: relative;
+        }
+        
+        .scene-highlight:before {
+            content: """;
+            font-size: 3rem;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            color: rgba(184, 139, 74, 0.3);
+            font-family: serif;
+        }
+        
+        .gold-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b88b4a, transparent);
+            margin: 1.5rem 0;
+        }
+        
+        .chapter-number {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 1.8rem;
+            color: #b88b4a;
+            z-index: 10;
+            font-family: 'Ma Shan Zheng', cursive;
+            background: rgba(10, 8, 5, 0.7);
+            padding: 5px 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(184, 139, 74, 0.3);
+        }
+        
+        /* 装饰元素 */
+        .chinese-pattern {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            opacity: 0.03;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 C40,0 60,0 80,20 C100,40 100,60 80,80 C60,100 40,100 20,80 C0,60 0,40 20,20 Z" fill="none" stroke="%23b88b4a" stroke-width="1"/></svg>');
+            background-size: contain;
+            z-index: 0;
+        }
+        
+        .pattern-1 { top: 10%; left: 5%; }
+        .pattern-2 { bottom: 15%; right: 7%; transform: rotate(45deg); }
+        .pattern-3 { top: 40%; right: 15%; width: 150px; height: 150px; }
+        .pattern-4 { bottom: 30%; left: 10%; width: 180px; height: 180px; }
+
+        /* 致谢部分样式 */
+        .acknowledgement {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .acknowledgement-title {
+            color: #b88b4a;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .tech-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 10px 0 5px;
+        }
+
+        .tech-logo {
+            background: rgba(184, 139, 74, 0.15);
+            color: #e0d6b0;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(184, 139, 74, 0.3);
+        }
+
+        .acknowledgement-text {
+            color: #9c8e67;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 1024px) {
+            .title {
+                font-size: 4rem;
+            }
+            
+            .scene-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .scene-section {
+                flex-direction: column;
+                padding: 60px 20px;
+            }
+            
+            .video-container, .content-container {
+                flex: none;
+                width: 100%;
+                min-height: auto;
+            }
+            
+            .video-container {
+                height: 50vh;
+                margin-bottom: 40px;
+                border-radius: 5px;
+            }
+            
+            .scene-video {
+                min-height: auto;
+                height: 100%;
+            }
+            
+            .content-container {
+                padding: 0;
+            }
+            
+            .scene-section:nth-child(odd) .content-container,
+            .scene-section:nth-child(even) .content-container {
+                padding: 0;
+            }
+            
+            .title {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .chapter-number {
+                top: 15px;
+                left: 15px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(5, 4, 2, 0.8);
+            border-top: 1px solid rgba(184, 139, 74, 0.2);
+        }
+        
+        .footer-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #e8c35d;
+            margin-bottom: 20px;
+        }
+        
+        .footer-text {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            color: #c9b17e;
+        }
+        
+        .copyright {
+            color: #7a6e4f;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+        
+        /* 导航 */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(184, 139, 74, 0.4);
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .dot.active {
+            background: #b88b4a;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(184, 139, 74, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-dots {
+                display: none;
+            }
+        }
+
+        /* 音效控制按钮 */
+        #musicControl {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(184, 139, 74, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid #e8c35d;
+            box-shadow: 0 0 15px rgba(232, 195, 93, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        #musicControl:hover {
+            background: rgba(184, 139, 74, 0.9);
+            transform: scale(1.1);
+        }
+        
+        #musicControl i {
+            font-size: 24px;
+            color: #fff;
+        }
+        
+        /* 静音状态 */
+        #musicControl.muted i::before {
+            content: "\f6a9"; /* fa-volume-mute */
+        }
+
+        /* 自动滚动按钮 - 更新 */
+        #autoScrollBtn {
+            position: fixed;
+            bottom: 100px; /* 位于音量按钮上方 */
+            right: 15px;
+            background: linear-gradient(135deg, #b88b4a, #e8c35d);
+            color: #0a0805;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.rem;
+            cursor: pointer;
+            z-index: 1001; /* 高于音量按钮 */
+            box-shadow: 0 5px 20px rgba(184, 139, 74, 0.5);
+            border: 2px solid #e8c35d;
+            transition: all 0.3s ease;
+        }
+        
+        #autoScrollBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 7px 25px rgba(232, 195, 93, 0.7);
+        }
+        
+        #autoScrollBtn.playing {
+            background: linear-gradient(135deg, #F5F3E7, #E8E1C5); /* 白金色渐变 */
+            border-color: #D4C8A9;
+            color: #8B7500; /* 深金色文字 */
+          }
+        
+        #autoScrollBtn.playing i::before {
+            content: "\f04c"; /* fa-pause */
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航指示器 -->
+    <div class="nav-dots">
+        <div class="dot active" data-section="header"></div>
+        <div class="dot" data-section="scene1"></div>
+        <div class="dot" data-section="scene2"></div>
+        <div class="dot" data-section="scene3"></div>
+        <div class="dot" data-section="scene4"></div>
+        <div class="dot" data-section="scene5"></div>
+        <div class="dot" data-section="scene6"></div>
+        <div class="dot" data-section="scene7"></div>
+        <div class="dot" data-section="scene8"></div>
+        <div class="dot" data-section="scene9"></div>
+        <div class="dot" data-section="scene10"></div>
+    </div>
+
+    <!-- 背景音效 -->
+    <audio id="bgMusic" loop>
+        <source src="./assets/music.wav" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <!-- 音效控制按钮 -->
+    <div id="musicControl">
+        <i class="fas fa-volume-up"></i>
+    </div>
+    
+    <!-- 标题部分 -->
+    <header class="header" id="header">
+        <h1 class="title">西游心路：悟空十相成佛记</h1>
+        <p class="subtitle">结合先进AIGC技术，沉浸式体验齐天大圣的史诗历程，感受古典神话的磅礴魅力</p>
+        <p class="footer-text">沈千帆 | 信息科学技术学院 | 2200013220</p>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="chinese-pattern pattern-1"></div>
+        <div class="chinese-pattern pattern-2"></div>
+    </header>
+    
+    <div class="container">
+        <!-- 场景1: 石猴出世 -->
+        <section class="scene-section" id="scene1">
+            <div class="chinese-pattern pattern-3"></div>
+            <div class="chinese-pattern pattern-4"></div>
+            
+            <div class="chapter-number">第一章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">石猴出世</h2>
+                <p class="scene-description">
+                    东胜神洲傲来国花果山顶，仙石受天地精华孕育，一日迸裂产一石卵，遇风化作石猴。此猴目运金光，射冲斗府，惊动玉帝。石猴勇探水帘洞，被群猴尊为"美猴王"，自此逍遥花果山福地。
+                </p>
+                <div class="scene-highlight">
+                    "那座山正当顶上，有一块仙石...内育仙胞，一日迸裂，产一石卵，似圆球样大。因见风，化作一个石猴。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    此乃孙悟空生命起点，象征天地灵气的结晶。石猴天生神力，不惧生死，为求长生不老之术后远渡重洋，开启传奇历程。
+                </p>
+            </div>
+        </section>
+        
+        <!-- 场景2: 灵台拜师 -->
+        <section class="scene-section" id="scene2">
+            <div class="chapter-number">第二章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/2.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">灵台拜师</h2>
+                <p class="scene-description">
+                    美猴王乘筏渡海，历经艰险至西牛贺洲灵台方寸山，拜菩提祖师为师。得赐名"孙悟空"，修得长生妙道、七十二般变化、筋斗云等神通。七年后因炫耀本领被逐出师门。
+                </p>
+                <div class="scene-highlight">
+                    "悟空心灵福至，切切记了口诀...这一夜，悟空即运神炼法，会了筋斗云。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    此段奠定悟空超凡能力基础，七十二变象征变化无穷的智慧，筋斗云代表自由无拘的本性。从"妖猴"到"悟空"的转变，预示其修行之路的开始。
+                </p>
+            </div>
+        </section>
+        
+        <!-- 场景3: 大闹天宫 -->
+        <section class="scene-section" id="scene3">
+            <div class="chapter-number">第三章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/3.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">龙宫索兵</h2>
+                <p class="scene-description">
+                    学艺归来的孙悟空为寻称手兵器，直闯东海龙宫。龙王先后展示大杆刀、九股叉、方天戟等宝物，悟空皆嫌轻巧。龙婆献计引导悟空至定海神珍铁处。此铁原为大禹治水时测量江海深浅的定子，重一万三千五百斤。悟空念动咒语"再细些！再短些！"，神铁竟化作趁手金箍棒。后又强索藕丝步云履、锁子黄金甲、凤翅紫金冠。龙王震怒，联名四海龙王上表天庭告状。
+                </p>
+                <div class="scene-highlight">
+                    "悟空撩衣上前，摸了一把，乃是一根铁柱子...心中暗想道：'想必这宝贝如人意！'"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    野性对秩序的首度挑战，以神力撕碎龙宫权威与生死轮回，埋下大闹天宫的祸因。金箍棒的获得标志悟空战斗力的质变。
+                </p>
+            </div>
+        </section>
+        
+        <!-- 场景4: 大闹天宫 -->
+        <section class="scene-section" id="scene4">
+            <div class="chapter-number">第四章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/4.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">大闹天宫</h2>
+                <p class="scene-description">
+                    悟空因嫌弼马温官职卑微反下天庭，自封"齐天大圣"。二次招安后掌管蟠桃园，却偷吃蟠桃、大闹蟠桃宴、盗食老君仙丹。玉帝遣十万天兵围剿，悟空力战九曜星君、哪吒三太子等众神。二郎神奉旨捉拿，二人斗法七十二变不相上下。老君掷金刚琢偷袭，悟空被擒。天庭刀砍雷劈不死，投入八卦炉反炼就火眼金睛。破炉而出后直捣凌霄殿，最终被如来佛祖镇压五指山下。
+                </p>
+                <div class="scene-highlight">
+                    "打得那九曜星闭门闭户，四天王无影无形...这一番，猴王不分上下，使铁棒东打西敌，更无一神可挡。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    此战是悟空反抗精神的巅峰，展现其蔑视等级制度、追求平等的本性。火眼金睛的诞生象征苦难中的蜕变，八卦炉炼化暗喻"真金不怕火炼"。虽被镇压，但"齐天大圣"威名永载三界史册。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景3: 五行镇魔 -->
+        <section class="scene-section" id="scene5">
+            <div class="chapter-number">第五章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/5.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">五行镇魔</h2>
+                <p class="scene-description">
+                    悟空与如来斗法，自信能一筋斗翻出佛祖掌心。行至天边五根肉柱，题字"齐天大圣到此一游"并撒尿为证。不料仍在如来掌中，佛祖翻掌化五指为金木水火土五座联山，名"五行山"。悟空被压山底五百年，饥食铁丸，渴饮铜汁。山体贴有"唵嘛呢叭咪吽"六字真言法帖，镇压其神通。期间山神土地受命监押，直至唐僧西行路过解救。
+                </p>
+                <div class="scene-highlight">
+                    "好大圣，急纵身又要跳出，被佛祖翻掌一扑，把这猴王推出西天门外，将五指化作金、木、水、火、土五座联山，唤名'五行山'，轻轻的把他压住。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    五百年镇压是悟空生命的重要转折，象征绝对力量面前狂傲的终结。铁丸铜汁的惩罚暗喻"吞铁咽钢"的磨砺过程。山体六字真言代表佛法无边，为后续皈依佛门埋下伏笔。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景4: 金箍束魔 -->
+        <section class="scene-section" id="scene6">
+            <div class="chapter-number">第六章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/6.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">金箍束魔</h2>
+                <p class="scene-description">
+                    唐僧救出悟空后，悟空野性难驯打死六个强盗。唐僧责备，悟空负气离去。观音化身老母赠嵌金花帽，唐僧哄悟空戴上。悟空戴帽后唐僧即念紧箍咒，悟空头痛欲裂。得知咒语来自观音，悟空欲往南海理论。观音现身点化："须得这个箍儿拘系你，方可成就正果"。自此悟空死心塌地保唐僧西行，但心中常怀委屈。
+                </p>
+                <div class="scene-highlight">
+                    "那师父不住的念了几遍，把那行者痛得打滚...我愿保你，再无退悔之意了。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    外力强加的修行戒律，标志"行者"身份对"大圣"本性的驯服开端。金箍不仅是物理束缚，更是心性磨砺的象征。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景5: 三打尸魔 -->
+        <section class="scene-section" id="scene7">
+            <div class="chapter-number">第七章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/7.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">三打白骨精</h2>
+                <p class="scene-description">
+                    白虎岭白骨精三度化形：先变送饭村姑，被悟空识破打死；再变寻女老妇，又被悟空打死；后变寻妻女老翁，仍被悟空打死。唐僧肉眼凡胎不识妖怪，八戒又从中挑拨。悟空现出妖精原形——堆粉骷髅，脊梁有"白骨夫人"字样。唐僧仍不信，写下贬书逐走悟空。悟空含泪拜别，嘱托沙僧保护师父。
+                </p>
+                <div class="scene-highlight">
+                    "师父，你面前这个女子，莫当做个好人。她是个妖精，要来骗你哩。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    忠诚反遭误解，火眼金睛的洞见与肉眼凡胎的局限构成取经路上最痛彻的信任裂痕。此劫展现佛理与人情的根本冲突。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景6: 真假美猴王 -->
+        <section class="scene-section" id="scene8">
+            <div class="chapter-number">第八章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/8.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">真假美猴王</h2>
+                <p class="scene-description">
+                    悟空被逐后，六耳猕猴假扮悟空打伤唐僧，抢走行李。真悟空回花果山发现假悟空组建取经队伍。两猴从花果山打到天宫，照妖镜难辨真假；到南海观音处，紧箍咒同痛；至地府，谛听神兽知而不言；最终闹至雷音寺。如来佛祖揭穿六耳猕猴本相，假悟空现原形被真悟空打死。佛祖道出"二心竞斗"玄机，悟空回归取经队伍。
+                </p>
+                <div class="scene-highlight">
+                    "如来笑云：'汝等法力广大，只能普阅周天之事，不能遍识周天之物，亦不能广会周天之种类也。'"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    身份认同的终极危机，真假之战胜负即心性归一的里程碑。此役后悟空彻底斩断二心，师徒信任重铸。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景7: 三借芭蕉扇 -->
+        <section class="scene-section" id="scene9">
+            <div class="chapter-number">第九章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/9.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">三借芭蕉扇</h2>
+                <p class="scene-description">
+                    火焰山阻挡取经路，需铁扇公主芭蕉扇灭火。初借：悟空被罗刹女一扇扇至灵吉菩萨处，得定风丹；二借：悟空变小虫入茶，在罗刹女腹中翻腾得假扇；三借：悟空变牛魔王骗真扇，却被真牛魔王变八戒反骗回。最终哪吒奉旨助战，降服牛魔王，取得真扇。悟空连扇四十九扇，断绝火根。
+                </p>
+                <div class="scene-highlight">
+                    "悟空抖擞精神，一扇熄火，二扇生风，三扇下雨，滋润大地。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    此难是大闹天宫时踢翻八卦炉的因果业报，展现悟空从蛮勇到智勇双全的蜕变。三借过程体现"一物降一物"的东方哲学，最终天庭与佛门联手降魔，暗示三界秩序的协作。
+                </p>
+            </div>
+        </section>
+
+        <!-- 场景8: 正果金身 -->
+        <section class="scene-section" id="scene10">
+            <div class="chapter-number">第十章</div>
+            
+            <div class="video-container">
+                <video class="scene-video" autoplay loop muted playsinline>
+                    <source src="./assets/10.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="content-container">
+                <h2 class="scene-title">正果金身</h2>
+                <p class="scene-description">
+                    历经九九八十一难，师徒抵达灵山。如来封唐僧为旃檀功德佛，悟空为斗战胜佛，八戒为净坛使者，沙僧为金身罗汉。悟空头上金箍自然消失。佛祖点明："那时功成归极乐，汝亦坐莲台"。悟空终脱妖胎成佛，金箍棒化作佛门法器，火眼金睛转为智慧光明。
+                </p>
+                <div class="scene-highlight">
+                    "孙悟空，汝因大闹天宫，吾以佛法镇压...今喜皈依，秉我加持，为斗战胜佛。"
+                </div>
+                <div class="gold-divider"></div>
+                <p class="scene-description">
+                    妖性、佛性与人性的三重统一，野性终成护法，自由不羁的灵魂在秩序中寻得终极归宿。金箍自然脱落象征修行圆满。
+                </p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <h2 class="footer-title">西游心路：悟空十相成佛记</h2>
+        <p class="footer-text">本网站展现孙悟空从妖王到佛陀的十大关键劫难，通过沉浸式体验揭示东方英雄的修行真谛，和AIGC技术的惊人魅力</p>
+        <div class="acknowledgement">
+            <div class="gold-divider" style="max-width: 400px; margin: 20px auto;"></div>
+            <p class="acknowledgement-title">技术致谢</p>
+            <div class="tech-logos">
+                <span class="tech-logo">DeepSeek</span>
+                <span class="tech-logo">GPT-4O</span>
+                <span class="tech-logo">即梦</span>
+                <span class="tech-logo">VIDU.AI</span>
+                <span class="tech-logo">可灵</span>
+            </div>
+            <p class="acknowledgement-text">本作品在以上AI技术支持下完成创作</p>
+            <p class="acknowledgement-title" style="margin-top: 25px;">创意参考</p>
+            <div class="creative-reference">
+                <a href="https://www.bilibili.com/video/BV1uHEwzQENJ?spm_id_from=333.788.recommend_more_video.-1&vd_source=69a15bad2e58e2dabae6454173e799f3" target="_blank" class="reference-link">
+                    <i class="fab fa-bilibili"></i>
+                    用AI做3D裸眼视频
+                </a>
+            </div>
+            <p class="acknowledgement-text">特别感谢以上作品提供的视觉灵感</p>
+        </div>
+        <p class="copyright">© 2025春-西游记与中国文化-创意作业 | 沈千帆 2200013220 | 基于吴承恩原著《西游记》创作</p>
+    </footer>
+
+    <!-- 自动滚动控制按钮 -->
+    <div id="autoScrollBtn" class="scroll-btn">
+        <i class="fas fa-play"></i>
+        <span>开始滚动</span>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('.scene-video');
+            const dots = document.querySelectorAll('.dot');
+            const sections = document.querySelectorAll('.scene-section, .header');
+            
+            // 自动播放可见视频
+            function playVisibleVideos() {
+                videos.forEach(video => {
+                    const rect = video.getBoundingClientRect();
+                    const isVisible = (
+                        rect.top < window.innerHeight * 0.75 && 
+                        rect.bottom > window.innerHeight * 0.25
+                    );
+                    
+                    if (isVisible && video.paused) {
+                        video.play().catch(e => console.log('视频播放失败:', e));
+                    }
+                });
+            }
+            
+            // 更新导航点
+            function updateActiveDot() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 3 && rect.bottom >= window.innerHeight / 3) {
+                        currentSection = section.id;
+                    }
+                });
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (dot.dataset.section === currentSection) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+            
+            // 点击导航点滚动
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const sectionId = dot.dataset.section;
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // 初始化播放当前可见视频
+            playVisibleVideos();
+            updateActiveDot();
+            
+            // 滚动时检测
+            window.addEventListener('scroll', () => {
+                playVisibleVideos();
+                updateActiveDot();
+            });
+            
+            // 添加视差效果增强沉浸感
+            window.addEventListener('scroll', () => {
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const video = section.querySelector('.scene-video');
+                    
+                    if (video && rect.top < window.innerHeight && rect.bottom > 0) {
+                        const progress = 1 - (rect.top / window.innerHeight);
+                        video.style.transform = `scale(${1 + progress * 0.03})`;
+                        video.style.filter = `saturate(${1.1 + progress * 0.1}) contrast(${1.05 + progress * 0.05}) brightness(${0.95 + progress * 0.05})`;
+                    }
+                });
+            });
+        });
+
+        // 背景音乐控制
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgMusic = document.getElementById('bgMusic');
+            const musicControl = document.getElementById('musicControl');
+            let isMuted = false;
+            
+            // 尝试自动播放（需要用户交互）
+            function tryPlayMusic() {
+            bgMusic.play().catch(e => {
+                console.log('需要用户交互才能播放音频');
+            });
+            }
+            
+            // 用户第一次滚动时尝试播放音乐
+            let firstScroll = true;
+            window.addEventListener('scroll', () => {
+            if (firstScroll) {
+                tryPlayMusic();
+                firstScroll = false;
+            }
+            });
+            
+            // 点击控制按钮
+            musicControl.addEventListener('click', function() {
+            isMuted = !isMuted;
+            
+            if (isMuted) {
+                bgMusic.volume = 0;
+                this.classList.add('muted');
+            } else {
+                bgMusic.volume = 0.3;
+                this.classList.remove('muted');
+                tryPlayMusic();
+            }
+            });
+            
+            // 设置初始音量（30%）
+            bgMusic.volume = 0.3;
+        });
+    </script>
+    <script>
+        // 替换您现有的自动滚动脚本
+        let autoScrollEnabled = false;
+        let scrollInterval;
+
+        function startAutoScroll() {
+        autoScrollEnabled = true;
+        const btn = document.getElementById('autoScrollBtn');
+        btn.classList.add('playing');
+        btn.querySelector('span').textContent = '暂停滚动';
+        
+        scrollInterval = setInterval(() => {
+            if (autoScrollEnabled) {
+            window.scrollBy({ top: 1, behavior: 'smooth' }, 1.5);
+            
+            // 检查是否到达页面底部
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                pauseAutoScroll();
+            }
+            }
+        }, 30);
+        }
+
+        function pauseAutoScroll() {
+        autoScrollEnabled = false;
+        const btn = document.getElementById('autoScrollBtn');
+        btn.classList.remove('playing');
+        btn.querySelector('span').textContent = '开始滚动';
+        clearInterval(scrollInterval);
+        }
+
+        // 按钮事件监听
+        document.getElementById('autoScrollBtn').addEventListener('click', () => {
+        if (autoScrollEnabled) {
+            pauseAutoScroll();
+        } else {
+            startAutoScroll();
+        }
+        });
+
+        // 初始状态
+        pauseAutoScroll(); // 默认不自动滚动
+      </script>
+</body>
+</html>
