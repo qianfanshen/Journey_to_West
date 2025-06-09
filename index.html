@@ -6,6 +6,8 @@
     <title>西游心路：悟空十相成佛记</title>
     <!-- <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preload" href="./assets/mashanzheng.ttf" as="font" type="font/woff2" crossorigin="anonymous">
+
     <style>
         * {
             margin: 0;
@@ -118,7 +120,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding: 40px 0;
+            padding: 50px 80px 0px 0px;
         }
         
         /* 交错布局 */
@@ -134,6 +136,7 @@
         
         .scene-section:nth-child(even) .video-container {
             order: 2;
+            
         }
         
         .scene-section:nth-child(even) .content-container {
@@ -153,6 +156,7 @@
             overflow: hidden;
             border-radius: 5px;
             box-shadow: 0 0 40px rgba(184, 139, 74, 0.2);
+            
         }
         
         .content-container {
@@ -246,8 +250,8 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            opacity: 0.03;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 C40,0 60,0 80,20 C100,40 100,60 80,80 C60,100 40,100 20,80 C0,60 0,40 20,20 Z" fill="none" stroke="%23b88b4a" stroke-width="1"/></svg>');
+            opacity: 0.3;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q30,30 40,50 Q50,20 60,50 Q70,30 80,50" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linecap="round"/></svg>');
             background-size: contain;
             z-index: 0;
         }
@@ -417,7 +421,7 @@
         #musicControl {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            right: 13px;
             width: 50px;
             height: 50px;
             background: rgba(184, 139, 74, 0.7);
@@ -451,17 +455,17 @@
         #autoScrollBtn {
             position: fixed;
             bottom: 100px; /* 位于音量按钮上方 */
-            right: 15px;
+            right: 5px;
             background: linear-gradient(135deg, #b88b4a, #e8c35d);
             color: #0a0805;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 1.rem;
+            font-size: 0.9rem;
             cursor: pointer;
             z-index: 1001; /* 高于音量按钮 */
             box-shadow: 0 5px 20px rgba(184, 139, 74, 0.5);
@@ -617,7 +621,7 @@
             <div class="content-container">
                 <h2 class="scene-title">大闹天宫</h2>
                 <p class="scene-description">
-                    悟空因嫌弼马温官职卑微反下天庭，自封"齐天大圣"。二次招安后掌管蟠桃园，却偷吃蟠桃、大闹蟠桃宴、盗食老君仙丹。玉帝遣十万天兵围剿，悟空力战九曜星君、哪吒三太子等众神。二郎神奉旨捉拿，二人斗法七十二变不相上下。老君掷金刚琢偷袭，悟空被擒。天庭刀砍雷劈不死，投入八卦炉反炼就火眼金睛。破炉而出后直捣凌霄殿，最终被如来佛祖镇压五指山下。
+                    孙悟空嫌弼马温官小，反下天庭自称齐天大圣。天庭招安他看管蟠桃园，他却偷吃蟠桃、大闹天宫。玉帝派兵捉拿，悟空与众神大战。被抓后刀枪不入，八卦炉反炼出火眼金睛。最终被如来镇压在五指山下。
                 </p>
                 <div class="scene-highlight">
                     "打得那九曜星闭门闭户，四天王无影无形...这一番，猴王不分上下，使铁棒东打西敌，更无一神可挡。"
@@ -789,7 +793,7 @@
             <p class="acknowledgement-title">技术致谢</p>
             <div class="tech-logos">
                 <span class="tech-logo">DeepSeek</span>
-                <span class="tech-logo">GPT-4O</span>
+                <span class="tech-logo">GPT-4o</span>
                 <span class="tech-logo">即梦</span>
                 <span class="tech-logo">VIDU.AI</span>
                 <span class="tech-logo">可灵</span>
@@ -938,7 +942,7 @@
         autoScrollEnabled = true;
         const btn = document.getElementById('autoScrollBtn');
         btn.classList.add('playing');
-        btn.querySelector('span').textContent = '暂停滚动';
+        btn.querySelector('span').textContent = '暂停';
         
         scrollInterval = setInterval(() => {
             if (autoScrollEnabled) {
@@ -956,7 +960,7 @@
         autoScrollEnabled = false;
         const btn = document.getElementById('autoScrollBtn');
         btn.classList.remove('playing');
-        btn.querySelector('span').textContent = '开始滚动';
+        btn.querySelector('span').textContent = '滚动';
         clearInterval(scrollInterval);
         }
 
